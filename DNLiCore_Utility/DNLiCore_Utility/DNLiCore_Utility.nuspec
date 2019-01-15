@@ -10,7 +10,8 @@
     <projectUrl>https://github.com/DNLi303/DNLiCore_Utility</projectUrl>
     <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>     
+    <description>  
+      DNLiCore的一款工具类库
     </description>
 	<dependencies>
       <dependency id="EPPlus.Core" version="1.5.4" />
