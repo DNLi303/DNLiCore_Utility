@@ -70,112 +70,96 @@ namespace DNLiCore_Utility.Excel
         }
         #endregion
 
-        #region excel转成DataTable
+        #region excel转成DataSet
         /// <summary>
-        /// excel转成DataTable
+        /// excel转成DataSet
         /// </summary>
         /// <param name="fileInfo">文件</param>
         /// <param name="worksheet">sheet名称</param>
-        /// <returns></returns>
-        private static DataTable readExcelPackageToDataTable(FileInfo fileInfo, string worksheetName = "Sheet1")
-        {
-            return GetExcelToTable(fileInfo, worksheetName);
-        }
-        /// <summary>
-        /// excel转成DataTable
-        /// </summary>
-        /// <param name="fileRealPath">文件的实际路径</param>
-        /// <param name="worksheetName">sheet名称</param>
-        /// <remarks>
-        ///  string sWebRootFolder = _hostingEnvironment.WebRootPath;
-        ///  string realPath = Path.Combine(sWebRootFolder, "Upload/Excel/report.xlsx");
-        /// </remarks>
-        /// <returns></returns>       
-        public static DataTable GetExcelToTable(FileInfo fileInfo, string worksheetName = "Sheet1")
+        /// <returns></returns>              
+        public static DataSet GetExcelToDataSet(FileInfo fileInfo, string WorksheetsName = "")
         {
             var package = new ExcelPackage(fileInfo);
-            ExcelWorksheet worksheet = package.Workbook.Worksheets[worksheetName];
-            DataTable table = new DataTable(worksheet.Name);
-
-            var rowCount = worksheet.Dimension?.Rows;
-            var colCount = worksheet.Dimension?.Columns;
-
-            if (!rowCount.HasValue || !colCount.HasValue)
-            {
-                return table;
-            }
-
-            //先构造table的列
-            for (int col = 1; col <= colCount.Value; col++)
-            {
-                object colObject = worksheet.Cells[1, col].Value;
-                string columName = colObject.ToString();
-                DataColumn dataColumn = new DataColumn(columName, colObject.GetType());
-                table.Columns.Add(dataColumn);  //构造列
-            }
-            for (int row = 2; row <= rowCount.Value; row++)
-            {
-                DataRow dataRow = table.NewRow();
-                for (int col = 1; col <= colCount.Value; col++)
-                {
-                    dataRow[col - 1] = worksheet.Cells[row, col].Value;
-                }
-                table.Rows.Add(dataRow);
-            }
-            return table;
+            return GetExcelToDataSetByExcelPackage(package, WorksheetsName);
         }
-
-        public static DataSet GetExcelToTable(FileInfo fileInfo)
+        public static DataSet GetExcelToDataSet(Stream stream, string WorksheetsName = "")
         {
-            var package = new ExcelPackage(fileInfo);
-            DataSet dataSet = new DataSet();
-            foreach (var item in package.Workbook.Worksheets)
-            {
-                ExcelWorksheet worksheet = item;
-                DataTable table = new DataTable(worksheet.Name);
-
-                var rowCount = worksheet.Dimension?.Rows;
-                var colCount = worksheet.Dimension?.Columns;
-
-                if (!rowCount.HasValue || !colCount.HasValue)
-                {
-                    dataSet.Tables.Add(table);
-                }
-                else
-                {
-                    //先构造table的列
-                    for (int col = 1; col <= colCount.Value; col++)
-                    {
-                        object colObject = worksheet.Cells[1, col].Value;
-                        string columName = colObject.ToString();
-                        DataColumn dataColumn = new DataColumn(columName, colObject.GetType());
-                        table.Columns.Add(dataColumn);  //构造列
-                    }
-                    for (int row = 2; row <= rowCount.Value; row++)
-                    {
-                        DataRow dataRow = table.NewRow();
-                        for (int col = 1; col <= colCount.Value; col++)
-                        {
-                            dataRow[col - 1] = worksheet.Cells[row, col].Value;
-                        }
-                        table.Rows.Add(dataRow);
-                    }
-                    dataSet.Tables.Add(table);
-                }
-            }
-            return dataSet;
+            var package = new ExcelPackage(stream);
+            return GetExcelToDataSetByExcelPackage(package, WorksheetsName);
         }
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="filePath">绝对路径</param>
         /// <returns></returns>
-        public static DataSet GetExcelToTable(string filePath)
+        public static DataSet GetExcelToDataSet(string filePath, string WorksheetsName = "")
         {
             FileInfo fileInfo = new FileInfo(filePath);
-            return GetExcelToTable(fileInfo);
+            return GetExcelToDataSet(fileInfo, WorksheetsName);
         }
+        private static DataSet GetExcelToDataSetByExcelPackage(ExcelPackage package, string WorksheetsName = "")
+        {
+            DataSet dataSet = new DataSet();
+            List<ExcelWorksheet> worksheets = new List<ExcelWorksheet>();
+            if (WorksheetsName != "")
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets[WorksheetsName];
+                if (worksheet != null)
+                {
+                    worksheets.Add(worksheet);
+                }
+            }
+            else
+            {
+                ExcelWorksheets myworksheets = package.Workbook.Worksheets;
+                foreach (var item in myworksheets)
+                {
+                    worksheets.Add(item);
+                }
+            }
+            if (worksheets != null && worksheets.Count > 0)
+            {
+                foreach (var item in worksheets)
+                {
+                    ExcelWorksheet worksheet = item;
+                    DataTable table = new DataTable(worksheet.Name);
+
+                    var rowCount = worksheet.Dimension?.Rows;
+                    var colCount = worksheet.Dimension?.Columns;
+
+                    if (!rowCount.HasValue || !colCount.HasValue)
+                    {
+                        dataSet.Tables.Add(table);
+                    }
+                    else
+                    {
+                        //先构造table的列
+                        for (int col = 1; col <= colCount.Value; col++)
+                        {
+                            object colObject = worksheet.Cells[1, col].Value;
+                            string columName = colObject.ToString();
+                            DataColumn dataColumn = new DataColumn(columName, colObject.GetType());
+                            table.Columns.Add(dataColumn);  //构造列
+                        }
+                        for (int row = 2; row <= rowCount.Value; row++)
+                        {
+                            DataRow dataRow = table.NewRow();
+                            for (int col = 1; col <= colCount.Value; col++)
+                            {
+                                dataRow[col - 1] = worksheet.Cells[row, col].Value;
+                            }
+                            table.Rows.Add(dataRow);
+                        }
+                        dataSet.Tables.Add(table);
+                    }
+                }
+            }
+
+           
+            return dataSet;
+        }
+
+
         #endregion
     }
 }

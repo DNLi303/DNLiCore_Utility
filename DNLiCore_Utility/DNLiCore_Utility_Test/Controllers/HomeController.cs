@@ -21,7 +21,7 @@ namespace DNLiCore_Utility_Test.Controllers
         {
             string sWebRootFolder = hostingEnvironment.WebRootPath;
             string realPath = Path.Combine(sWebRootFolder, "Upload/1.xlsx");
-            DataSet ds = DNLiCore_Utility.Excel.ExcelHelper.GetExcelToTable(realPath);
+            DataSet ds = DNLiCore_Utility.Excel.ExcelHelper.GetExcelToDataSet(realPath,"Shdsdeet1");
             return View();
         }
 

@@ -13,7 +13,7 @@ DNLiCore_Unitility是基于DNLiCore下的一个工具类,该工具类包括一�
 	1.2 EmailHelper.Init(); //初始化邮件  
 2.Excel:DNLiCore_Utility.Excel  
 	2.1 ExcelHelper.DataTableReport(); //DataTable导出excel  
-	2.2 ExcelHelper.readExcelPackageToDataTable() //Excel导入DataTable  
+	2.2 ExcelHelper.GetExcelToDataSet() //Excel导入DataSet 
 3.二维码:DNLiCore_Utility.Qrcode  
 	3.1 QrCodeHelper.CreateQrCode(); //创造二维码  
 4.加密解密:DNLiCore_Utility.Encrypt  
