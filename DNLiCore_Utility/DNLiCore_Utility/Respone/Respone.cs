@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DNLiCore_Unitility.Respone
+namespace DNLiCore_Utility.Respone
 {
     public static class ResponeHelper
     {
@@ -12,11 +12,11 @@ namespace DNLiCore_Unitility.Respone
             model.code = code;
             model.msg = msg;
             model.result = result;
-            return DNLiCore_Utility.Json.JsonHelper.ConvertModelToString(model);
+            return Json.JsonHelper.ConvertModelToString(model);
         }
         public static string ResponeMsg(baseReturnModel model)
         {            
-            return DNLiCore_Utility.Json.JsonHelper.ConvertModelToString(model);
+            return Json.JsonHelper.ConvertModelToString(model);
         }
         public static baseReturnModel ResponeMsgModel(int code, string msg="", Object result = null)
         {
