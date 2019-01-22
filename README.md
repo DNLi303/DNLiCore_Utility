@@ -24,7 +24,7 @@ DNLiCore_Unitility是基于DNLiCore下的一个工具类,该工具类包括一�
 	4.5 EncryptHelper.DESDecrypt(); //DES解密   
 	4.6 EncryptHelper.Base64Encrypt(); //Base64加密  
 	4.7 EncryptHelper.Base64Decrypt(); //Base64解密  
-5.日志:DNLiCore_Utility.Log  
+5.日志:DNLiCore_Utility.Log (NLogHelper需要先安装NLog.Config才可使用)
 	5.1:NLogHelper.Info();  //信息输出  
 	5.2:NLogHelper.Warn();  //警告信息输出  
 	5.3:NLogHelper.Error(); //错误信息输出  
