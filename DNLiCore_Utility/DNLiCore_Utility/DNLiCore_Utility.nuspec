@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <title>$title$</title>
     <authors>DNLi</authors>
     <owners>DNLi</owners>
@@ -10,16 +10,15 @@
     <projectUrl>https://github.com/DNLi303/DNLiCore_Utility</projectUrl>
     <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>  
+    <description>
       DNLiCore的一款工具类库
     </description>
-	<dependencies>
+    <dependencies>
       <dependency id="EPPlus.Core" version="1.5.4" />
       <dependency id="Newtonsoft.Json" version="12.0.1" />
       <dependency id="NLog" version="4.5.11" />
-	  <dependency id="NLog.Config" version="4.5.11" />
-	  <dependency id="QRCoder" version="1.3.5" />
-	  <dependency id="NSoupCore" version="1.0.0" />
+      <dependency id="QRCoder" version="1.3.5" />
+      <dependency id="NSoupCore" version="1.0.0" />
     </dependencies>
     <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
     <copyright>Copyright 2018</copyright>
